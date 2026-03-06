@@ -3,15 +3,18 @@ body {
   background-color: #1e1e1e;
   font-family: Arial;
   color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .container {
-  height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  gap:20px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 }
 
 .textbox {
@@ -24,9 +27,9 @@ body {
   outline: none;
 }
 
-.sample-text{
-  width:500px;
-  font-size:20px;
-  line-height:35px;
-  text-align:center;
+.sample-text {
+  width: 500px;
+  font-size: 20px;
+  line-height: 35px;
+  text-align: center;
 }
