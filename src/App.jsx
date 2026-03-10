@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import "./App.css";
 
 function App() {
-
   const sampleText = "The quick brown fox jumps over the lazy dog";
 
   const [text, setText] = useState("");
@@ -27,11 +26,9 @@ function App() {
     }
 
     return () => clearInterval(timer);
-
   }, [isTyping, time]);
 
   const handleTyping = (e) => {
-
     const value = e.target.value;
     setText(value);
 
@@ -44,7 +41,6 @@ function App() {
   };
 
   const calculateWPM = (inputText) => {
-
     const words = inputText
       .trim()
       .split(" ")
@@ -59,7 +55,6 @@ function App() {
   };
 
   const calculateAccuracy = (inputText) => {
-
     let correctChars = 0;
 
     for (let i = 0; i < inputText.length; i++) {
@@ -102,17 +97,14 @@ function App() {
 
   return (
     <div className="container">
-
-      <h1>Typing Speed Test</h1>
+      <h1>TypeShift</h1>
 
       <h2>Time: {time}s</h2>
       <h2>WPM: {wpm}</h2>
       <h2>Accuracy: {accuracy}%</h2>
 
       <p className="sample-text">
-
         {sampleText.split("").map((char, index) => {
-
           let color = "";
 
           if (index < text.length) {
@@ -125,7 +117,6 @@ function App() {
             </span>
           );
         })}
-
       </p>
 
       <textarea
@@ -139,7 +130,6 @@ function App() {
       <button onClick={restartTest} className="restart-btn">
         Restart Test
       </button>
-
     </div>
   );
 }
