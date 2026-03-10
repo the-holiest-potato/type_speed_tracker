@@ -16,17 +16,20 @@ function App() {
 
   useEffect(() => {
     let timer;
-    if (isTyping && time > 0) {
+    if (isTyping) {
       timer = setInterval(() => {
-        setTime((prevTime) => prevTime - 1);
+        setTime((prevTime) => {
+          if (prevTime <= 1) {
+            setIsTyping(false);
+            setTestFinished(true);
+            return 0;
+          }
+          return prevTime - 1;
+        });
       }, 1000);
-    } else if (time === 0) {
-      setIsTyping(false);
-      setTestFinished(true);
-      clearInterval(timer);
     }
     return () => clearInterval(timer);
-  }, [isTyping, time]);
+  }, [isTyping]);
 
   const handleTyping = (e) => {
     if (testFinished) return;
