@@ -1,16 +1,53 @@
-# React + Vite
+# TypeShift
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**TypeShift** is a web-based platform designed to help users practice and improve their typing speed and accuracy. The application provides an interactive typing environment where users can take typing tests, track their performance over time, and compare their results with others through a leaderboard.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+* **Typing Test Environment** – A dedicated typing test box where users can practice and measure their typing speed.
+* **User Authentication** – Login and registration system to manage personal accounts.
+* **Performance Dashboard** – Displays user statistics such as highest WPM, average accuracy, and total tests completed.
+* **Leaderboard** – Shows top user rankings based on typing performance.
+* **Live Settings** – Allows users to change typing modes and languages without leaving the test screen.
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Frontend
 
-## Expanding the ESLint configuration
+* React
+* JavaScript
+* HTML5
+* CSS3
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Backend
+
+* Node.js
+* Express.js
+
+### Database
+
+* MongoDB
+
+### Other Tools
+
+* Git
+* GitHub
+* Vite (for fast development and build optimization)
+
+## Project Status
+
+* **Completed:** UI planning, feature selection, and Figma prototype.
+* **Ongoing:** Development of frontend components using React.
+* **Planned:** Backend development, database integration, typing logic implementation, and final deployment.
+
+## Team Members
+
+* Aditya Mishra
+* Anushaka Prasad
+* Harshit Yadav
+* Devansh Singh
+* Darshika Singh
+
+---
+
+*TypeShift aims to provide a simple and focused platform for users to monitor and improve their typing skills.*
