@@ -7,7 +7,7 @@
 - **Styling:** Modern Dark Mode with Purple accents (`--main-color: #ae81ff`).
 - **Core Logic:** Real-time WPM and accuracy calculation with a dynamic caret that moves through the text.
 - **Project Status:** 
-    - **Completed:** Core typing engine, real-time stats (WPM, Accuracy, Raw WPM), modern dark-mode UI, and results screen.
+    - **Completed:** Core typing engine, real-time stats (WPM, Accuracy, Raw WPM), modern dark-mode UI, word-based line wrapping, and results screen.
     - **Ongoing:** Refining typing experience and asset management.
     - **Planned:** User Authentication, Performance Dashboard, and Leaderboard.
 
@@ -29,13 +29,15 @@ The project uses **Vite** as the build tool and development server.
 ### UI & Styling
 - **Theme:** Dark mode by default (`#111111`) with purple highlights.
 - **CSS Variables:** Standardized in `src/App.css` for colors (`--main-color`, `--bg-color`, etc.) and typography.
+- **Text Rendering:** Characters are grouped into `.word` containers to prevent words from splitting across lines during wrapping. Spaces are rendered as non-breaking spaces (`\u00A0`).
 - **Animations:** Subtle transitions for character states (correct/incorrect) and a blinking caret.
 
 ### Core Implementation Details
 - **WPM Calculation:** Standardized as `(correct characters / 5) / time in minutes`.
 - **Raw WPM:** Calculated as `(total characters typed / 5) / time in minutes`.
 - **Typing Engine:** Characters are rendered individually within a `.words-wrapper`. A `.caret` element is dynamically positioned based on the current input length.
-- **State Management:** Local React state manages the active test session, while `useRef` maintains focus on the hidden input.
+- **State Management:** Local React state manages the active test session. The `useEffect` hook is optimized to avoid cascading renders by handling test-finishing logic within the `setInterval` callback.
+- **Space Handling:** Incorrectly typed spaces are visually marked with a red background to ensure visibility.
 
 ## Key Files
 - `src/App.jsx`: Main application logic, typing engine, and state management.
