@@ -1,74 +1,71 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./App.css";
 
 function App() {
-  const sampleText = "The quick brown fox jumps over the lazy dog";
-
+  const sampleText = "the quick brown fox jumps over the lazy dog and feels the wind in its fur as it speeds across the emerald meadow beneath the golden sun";
+  
   const [text, setText] = useState("");
   const [time, setTime] = useState(30);
   const [isTyping, setIsTyping] = useState(false);
   const [wpm, setWpm] = useState(0);
   const [accuracy, setAccuracy] = useState(100);
   const [testFinished, setTestFinished] = useState(false);
+  const [rawWpm, setRawWpm] = useState(0);
+  
+  const inputRef = useRef(null);
 
   useEffect(() => {
     let timer;
-
-    if (isTyping && time > 0) {
+    if (isTyping) {
       timer = setInterval(() => {
-        setTime((prevTime) => prevTime - 1);
+        setTime((prevTime) => {
+          if (prevTime <= 1) {
+            setIsTyping(false);
+            setTestFinished(true);
+            return 0;
+          }
+          return prevTime - 1;
+        });
       }, 1000);
     }
-
-    if (time === 0) {
-      setIsTyping(false);
-      setTestFinished(true);
-    }
-
     return () => clearInterval(timer);
-  }, [isTyping, time]);
+  }, [isTyping]);
 
   const handleTyping = (e) => {
+    if (testFinished) return;
+    
     const value = e.target.value;
-    setText(value);
+    if (value.length > sampleText.length) return;
 
-    if (!isTyping) {
+    if (!isTyping && value.length > 0) {
       setIsTyping(true);
     }
 
-    calculateWPM(value);
-    calculateAccuracy(value);
+    setText(value);
+    calculateStats(value);
   };
 
-  const calculateWPM = (inputText) => {
-    const words = inputText
-      .trim()
-      .split(" ")
-      .filter((word) => word !== "").length;
+  const calculateStats = (inputText) => {
+    const timeSpent = (30 - time) / 60; // in minutes
+    if (timeSpent <= 0) return;
 
-    const timeSpent = 30 - time;
-
-    if (timeSpent > 0) {
-      const wpmValue = Math.round((words / timeSpent) * 60);
-      setWpm(wpmValue);
-    }
-  };
-
-  const calculateAccuracy = (inputText) => {
+    // Standard WPM: (correct characters / 5) / time
     let correctChars = 0;
-
     for (let i = 0; i < inputText.length; i++) {
       if (inputText[i] === sampleText[i]) {
         correctChars++;
       }
     }
 
-    const accuracyValue =
-      inputText.length === 0
-        ? 100
-        : Math.round((correctChars / inputText.length) * 100);
+    const calculatedWpm = Math.round((correctChars / 5) / timeSpent);
+    const calculatedRawWpm = Math.round((inputText.length / 5) / timeSpent);
+    const calculatedAccuracy = inputText.length === 0 
+      ? 100 
+      : Math.round((correctChars / inputText.length) * 100);
 
-    setAccuracy(accuracyValue);
+    setWpm(calculatedWpm);
+    setRawWpm(calculatedRawWpm);
+    setAccuracy(calculatedAccuracy);
   };
 
   const restartTest = () => {
@@ -76,18 +73,38 @@ function App() {
     setTime(30);
     setIsTyping(false);
     setWpm(0);
+    setRawWpm(0);
     setAccuracy(100);
     setTestFinished(false);
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
+
+  const focusInput = () => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
   };
 
   if (testFinished) {
     return (
-      <div className="container">
-        <h1>Test Finished</h1>
-
-        <h2>WPM: {wpm}</h2>
-        <h2>Accuracy: {accuracy}%</h2>
-
+      <div className="container result-screen">
+        <h1 className="title">Test Finished</h1>
+        <div className="stats-grid">
+          <div className="stat-box">
+            <span className="stat-label">wpm</span>
+            <span className="stat-value">{wpm}</span>
+          </div>
+          <div className="stat-box">
+            <span className="stat-label">acc</span>
+            <span className="stat-value">{accuracy}%</span>
+          </div>
+          <div className="stat-box">
+            <span className="stat-label">raw</span>
+            <span className="stat-value">{rawWpm}</span>
+          </div>
+        </div>
         <button onClick={restartTest} className="restart-btn">
           Restart Test
         </button>
@@ -96,40 +113,85 @@ function App() {
   }
 
   return (
-    <div className="container">
-      <h1>TypeShift</h1>
+    <div className="container" onClick={focusInput}>
+      <header className="header">
+        <h1 className="logo">TypeShift</h1>
+        <div className="live-stats">
+          <span>{time}s</span>
+          <span>{wpm} wpm</span>
+          <span>{accuracy}% acc</span>
+        </div>
+      </header>
 
-      <h2>Time: {time}s</h2>
-      <h2>WPM: {wpm}</h2>
-      <h2>Accuracy: {accuracy}%</h2>
+      <div className="typing-area">
+        <input
+          ref={inputRef}
+          type="text"
+          className="hidden-input"
+          value={text}
+          onChange={handleTyping}
+          autoFocus
+        />
+        <div className="words-wrapper">
+          {sampleText.split(" ").map((word, wIdx, wordArr) => {
+            const globalWordStart = wordArr
+              .slice(0, wIdx)
+              .reduce((acc, curr) => acc + curr.length + 1, 0);
 
-      <p className="sample-text">
-        {sampleText.split("").map((char, index) => {
-          let color = "";
+            return (
+              <div key={wIdx} className="word">
+                {word.split("").map((char, i) => {
+                  const index = globalWordStart + i;
+                  let state = "";
+                  if (index < text.length) {
+                    state = char === text[index] ? "correct" : "incorrect";
+                  }
+                  const isCurrent = index === text.length;
 
-          if (index < text.length) {
-            color = char === text[index] ? "green" : "red";
-          }
+                  return (
+                    <span
+                      key={index}
+                      className={`char ${state} ${isCurrent ? "current" : ""}`}
+                    >
+                      {isCurrent && <div className="caret"></div>}
+                      {char}
+                    </span>
+                  );
+                })}
+                {wIdx < wordArr.length - 1 && (() => {
+                  const index = globalWordStart + word.length;
+                  let state = "";
+                  if (index < text.length) {
+                    state = " " === text[index] ? "correct" : "incorrect";
+                  }
+                  const isCurrent = index === text.length;
+                  return (
+                    <span
+                      key={index}
+                      className={`char ${state} ${isCurrent ? "current" : ""} space`}
+                    >
+                      {isCurrent && <div className="caret"></div>}
+                      {"\u00A0"}
+                    </span>
+                  );
+                })()}
+              </div>
+            );
+          })}
+          {text.length === sampleText.length && (
+            <div className="word">
+              <span className="char current space">
+                <div className="caret"></div>
+                {"\u00A0"}
+              </span>
+            </div>
+          )}
+        </div>
+      </div>
 
-          return (
-            <span key={index} style={{ color: color }}>
-              {char}
-            </span>
-          );
-        })}
-      </p>
-
-      <textarea
-        className="textbox"
-        placeholder="Start typing here..."
-        value={text}
-        onChange={handleTyping}
-        disabled={time === 0}
-      />
-
-      <button onClick={restartTest} className="restart-btn">
-        Restart Test
-      </button>
+      <footer className="footer">
+        <p>Press <span className="key-hint">Tab</span> + <span className="key-hint">Enter</span> to quickly restart</p>
+      </footer>
     </div>
   );
 }
