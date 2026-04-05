@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import "./App.css";
+import { generateWords } from "./wordGenerator";
 
 function App() {
-  const sampleText = "the quick brown fox jumps over the lazy dog and feels the wind in its fur as it speeds across the emerald meadow beneath the golden sun";
-  
+  const [currentText, setCurrentText] = useState("");
   const [text, setText] = useState("");
   const [time, setTime] = useState(30);
   const [isTyping, setIsTyping] = useState(false);
@@ -13,6 +13,10 @@ function App() {
   const [rawWpm, setRawWpm] = useState(0);
   
   const inputRef = useRef(null);
+
+  useEffect(() => {
+    setCurrentText(generateWords(50).join(" "));
+  }, []);
 
   useEffect(() => {
     let timer;
@@ -35,7 +39,7 @@ function App() {
     if (testFinished) return;
     
     const value = e.target.value;
-    if (value.length > sampleText.length) return;
+    if (value.length > currentText.length) return;
 
     if (!isTyping && value.length > 0) {
       setIsTyping(true);
@@ -43,6 +47,11 @@ function App() {
 
     setText(value);
     calculateStats(value);
+
+    if (value.length === currentText.length) {
+      setIsTyping(false);
+      setTestFinished(true);
+    }
   };
 
   const calculateStats = (inputText) => {
@@ -52,7 +61,7 @@ function App() {
     // Standard WPM: (correct characters / 5) / time
     let correctChars = 0;
     for (let i = 0; i < inputText.length; i++) {
-      if (inputText[i] === sampleText[i]) {
+      if (inputText[i] === currentText[i]) {
         correctChars++;
       }
     }
@@ -76,6 +85,7 @@ function App() {
     setRawWpm(0);
     setAccuracy(100);
     setTestFinished(false);
+    setCurrentText(generateWords(50).join(" "));
     if (inputRef.current) {
       inputRef.current.focus();
     }
@@ -133,7 +143,7 @@ function App() {
           autoFocus
         />
         <div className="words-wrapper">
-          {sampleText.split(" ").map((word, wIdx, wordArr) => {
+          {currentText.split(" ").map((word, wIdx, wordArr) => {
             const globalWordStart = wordArr
               .slice(0, wIdx)
               .reduce((acc, curr) => acc + curr.length + 1, 0);
@@ -178,7 +188,7 @@ function App() {
               </div>
             );
           })}
-          {text.length === sampleText.length && (
+          {text.length === currentText.length && (
             <div className="word">
               <span className="char current space">
                 <div className="caret"></div>

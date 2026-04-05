@@ -7,9 +7,14 @@
 - **Styling:** Modern Dark Mode with Purple accents (`--main-color: #ae81ff`).
 - **Core Logic:** Real-time WPM and accuracy calculation with a dynamic caret that moves through the text.
 - **Project Status:** 
-    - **Completed:** Core typing engine, real-time stats (WPM, Accuracy, Raw WPM), modern dark-mode UI, word-based line wrapping, and results screen.
+    - **Completed:** Core typing engine, real-time stats (WPM, Accuracy, Raw WPM), modern dark-mode UI, word-based line wrapping, results screen, and dynamic word generation.
     - **Ongoing:** Refining typing experience and asset management.
     - **Planned:** User Authentication, Performance Dashboard, and Leaderboard.
+
+## Recent Changes (April 5, 2026)
+- **Dynamic Word Generation:** Integrated `src/wordGenerator.js` to provide a randomized set of words for each test session, replacing the hardcoded sample text.
+- **Test Completion Logic:** Implemented an automatic test finish condition when the user reaches the end of the generated text, in addition to the time-based finish.
+- **Reset Functionality:** Updated the restart mechanism to refresh the word pool, ensuring a unique experience every time.
 
 ## Building and Running
 The project uses **Vite** as the build tool and development server.
@@ -37,11 +42,13 @@ The project uses **Vite** as the build tool and development server.
 - **Raw WPM:** Calculated as `(total characters typed / 5) / time in minutes`.
 - **Typing Engine:** Characters are rendered individually within a `.words-wrapper`. A `.caret` element is dynamically positioned based on the current input length.
 - **State Management:** Local React state manages the active test session. The `useEffect` hook is optimized to avoid cascading renders by handling test-finishing logic within the `setInterval` callback.
+- **Word Generation:** Uses a custom `wordGenerator.js` utility that supports different difficulty levels (easy, common, hard) and ensures no two consecutive words are the same.
 - **Space Handling:** Incorrectly typed spaces are visually marked with a red background to ensure visibility.
 
 ## Key Files
 - `src/App.jsx`: Main application logic, typing engine, and state management.
 - `src/App.css`: Core design system, dark mode theme, and layout.
+- `src/wordGenerator.js`: Utility for generating randomized word lists based on difficulty.
 - `src/index.css`: Minimal global resets and color-scheme configuration.
 - `package.json`: Dependency management (React 19, Vite 7).
 - `README.md`: High-level project description and team details.
