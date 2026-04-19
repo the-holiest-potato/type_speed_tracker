@@ -14,11 +14,10 @@ body {
   color: var(--text-color);
   font-family: var(--font-family);
   margin: 0;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  overflow: hidden;
 }
 
 .container {
@@ -29,11 +28,12 @@ body {
   flex-direction: column;
   gap: 2rem;
   transition: all 0.3s ease;
+  margin-top: 80px; /* Space for Navbar */
 }
 
 .header {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end; /* Align stats to the right since logo is in Navbar */
   align-items: center;
 }
 
