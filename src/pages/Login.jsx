@@ -39,17 +39,3 @@ const Login = () => {
 };
 
 export default Login;
-n: center;
-  color: var(--sub-color);
-  font-size: 0.9rem;
-}
-
-.toggle-link {
-  color: var(--main-color);
-  cursor: pointer;
-  font-weight: 700;
-}
-
-.toggle-link:hover {
-  text-decoration: underline;
-}

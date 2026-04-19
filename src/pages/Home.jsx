@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { generateWords } from "../wordGenerator";
 
 function Home() {
-  const [currentText, setCurrentText] = useState("");
+  const [currentText, setCurrentText] = useState(() => generateWords(50).join(" "));
   const [text, setText] = useState("");
   const [time, setTime] = useState(30);
   const [isTyping, setIsTyping] = useState(false);
@@ -13,9 +13,7 @@ function Home() {
   
   const inputRef = useRef(null);
 
-  useEffect(() => {
-    setCurrentText(generateWords(50).join(" "));
-  }, []);
+  // Removed redundant initialization effect
 
   useEffect(() => {
     let timer;
