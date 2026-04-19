@@ -4,17 +4,20 @@
 **TypeShift** is a modern, web-based typing speed and accuracy tracker. It provides a highly interactive environment inspired by minimalist typing platforms, focusing on a clean aesthetic and smooth user experience.
 
 - **Frontend:** React 19, Vite, JavaScript (ESM).
+- **Routing:** React Router DOM for multi-page navigation (Home, Login, Profile).
+- **Icons:** Lucide React for consistent and modern iconography.
 - **Styling:** Modern Dark Mode with Purple accents (`--main-color: #ae81ff`).
 - **Core Logic:** Real-time WPM and accuracy calculation with a dynamic caret that moves through the text.
 - **Project Status:** 
-    - **Completed:** Core typing engine, real-time stats (WPM, Accuracy, Raw WPM), modern dark-mode UI, word-based line wrapping, results screen, and dynamic word generation.
-    - **Ongoing:** Refining typing experience and asset management.
-    - **Planned:** User Authentication, Performance Dashboard, and Leaderboard.
+    - **Completed:** Core typing engine, real-time stats (WPM, Accuracy, Raw WPM), modern dark-mode UI, word-based line wrapping, results screen, dynamic word generation, and multi-page routing.
+    - **Ongoing:** Refining typing experience, user authentication, and profile management.
+    - **Planned:** Database integration, Performance Dashboard, and Leaderboard.
 
-## Recent Changes (April 5, 2026)
-- **Dynamic Word Generation:** Integrated `src/wordGenerator.js` to provide a randomized set of words for each test session, replacing the hardcoded sample text.
-- **Test Completion Logic:** Implemented an automatic test finish condition when the user reaches the end of the generated text, in addition to the time-based finish.
-- **Reset Functionality:** Updated the restart mechanism to refresh the word pool, ensuring a unique experience every time.
+## Recent Changes (April 19, 2026)
+- **Multi-Page Routing:** Integrated `react-router-dom` and created `App.jsx` with routes for `/`, `/login`, and `/profile`.
+- **Navigation Bar:** Added a functional `Navbar` component with Lucide icons for seamless navigation between pages.
+- **Login & Profile Pages:** Implemented initial layouts for Login (with toggle between sign-in/sign-up) and Profile (guest view with feature previews).
+- **Bug Fixes:** Resolved a critical syntax error in `Login.jsx` caused by leaked CSS fragments and properly modularized page styles into separate CSS files.
 
 ## Building and Running
 The project uses **Vite** as the build tool and development server.
@@ -34,6 +37,7 @@ The project uses **Vite** as the build tool and development server.
 ### UI & Styling
 - **Theme:** Dark mode by default (`#111111`) with purple highlights.
 - **CSS Variables:** Standardized in `src/App.css` for colors (`--main-color`, `--bg-color`, etc.) and typography.
+- **Modular Styles:** Component-specific styles are kept in adjacent `.css` files (e.g., `src/pages/Login.css`).
 - **Text Rendering:** Characters are grouped into `.word` containers to prevent words from splitting across lines during wrapping. Spaces are rendered as non-breaking spaces (`\u00A0`).
 - **Animations:** Subtle transitions for character states (correct/incorrect) and a blinking caret.
 
@@ -46,7 +50,11 @@ The project uses **Vite** as the build tool and development server.
 - **Space Handling:** Incorrectly typed spaces are visually marked with a red background to ensure visibility.
 
 ## Key Files
-- `src/App.jsx`: Main application logic, typing engine, and state management.
+- `src/App.jsx`: Main routing configuration and application entry point.
+- `src/components/Navbar.jsx`: Global navigation component.
+- `src/pages/Home.jsx`: Core typing experience and game logic.
+- `src/pages/Login.jsx`: User authentication interface.
+- `src/pages/Profile.jsx`: User stats and settings overview.
 - `src/App.css`: Core design system, dark mode theme, and layout.
 - `src/wordGenerator.js`: Utility for generating randomized word lists based on difficulty.
 - `src/index.css`: Minimal global resets and color-scheme configuration.
