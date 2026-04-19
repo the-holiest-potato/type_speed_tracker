@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { Navigate } from 'react-router-dom';
 
 const Profile = () => {
-  const { user } = useAuth();
+  const { user, testHistory } = useAuth();
 
   if (!user) {
     return (
@@ -19,7 +19,7 @@ const Profile = () => {
   }
 
   return (
-    <div className="container" style={{ marginTop: '100px' }}>
+    <div className="container" style={{ marginTop: '100px', maxWidth: '1000px' }}>
       <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
         <div style={{ 
           width: '100px', 
@@ -36,36 +36,58 @@ const Profile = () => {
         </div>
         <h1 className="title" style={{ color: 'var(--main-color)', margin: '0' }}>{user.username || 'User'}</h1>
         <p style={{ color: 'var(--sub-color)' }}>{user.email}</p>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '2rem', marginTop: '1.5rem' }}>
+          <div style={{ textAlign: 'center' }}>
+            <p style={{ color: 'var(--sub-color)', fontSize: '0.8rem', margin: '0' }}>tests started</p>
+            <p style={{ fontSize: '1.5rem', color: 'var(--main-color)', margin: '0' }}>{testHistory.length}</p>
+          </div>
+          <div style={{ textAlign: 'center' }}>
+            <p style={{ color: 'var(--sub-color)', fontSize: '0.8rem', margin: '0' }}>avg. wpm</p>
+            <p style={{ fontSize: '1.5rem', color: 'var(--main-color)', margin: '0' }}>
+              {testHistory.length > 0 
+                ? Math.round(testHistory.reduce((acc, curr) => acc + curr.wpm, 0) / testHistory.length)
+                : 0}
+            </p>
+          </div>
+        </div>
       </div>
 
-      <div style={{ 
-        display: 'grid', 
-        gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
-        gap: '1.5rem',
-        maxWidth: '800px',
-        margin: '0 auto'
-      }}>
-        {[
-          { icon: <History />, label: 'Test History', desc: '0 tests completed' },
-          { icon: <Award />, label: 'Achievements', desc: 'No badges yet' },
-          { icon: <Settings />, label: 'Settings', desc: 'Customize experience' }
-        ].map((item, index) => (
-          <div key={index} style={{ 
-            backgroundColor: '#1a1a1a', 
-            padding: '1.5rem', 
-            borderRadius: '12px',
-            textAlign: 'center',
-            transition: 'transform 0.2s ease',
-            cursor: 'pointer'
-          }}
-          onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-5px)'}
-          onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
-          >
-            <div style={{ color: 'var(--main-color)', marginBottom: '0.5rem' }}>{item.icon}</div>
-            <h3 style={{ margin: '0.5rem 0', fontSize: '1.1rem' }}>{item.label}</h3>
-            <p style={{ color: 'var(--sub-color)', fontSize: '0.9rem', margin: '0' }}>{item.desc}</p>
+      <div style={{ backgroundColor: '#1a1a1a', borderRadius: '12px', padding: '1.5rem' }}>
+        <h2 style={{ fontSize: '1.2rem', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <History size={20} color="var(--main-color)" />
+          Recent Tests
+        </h2>
+        
+        {testHistory.length === 0 ? (
+          <p style={{ color: 'var(--sub-color)', textAlign: 'center', padding: '2rem' }}>No tests completed yet. Start typing!</p>
+        ) : (
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+              <thead>
+                <tr style={{ borderBottom: '1px solid #2c2e31', color: 'var(--sub-color)', fontSize: '0.9rem' }}>
+                  <th style={{ padding: '0.8rem' }}>wpm</th>
+                  <th style={{ padding: '0.8rem' }}>accuracy</th>
+                  <th style={{ padding: '0.8rem' }}>raw</th>
+                  <th style={{ padding: '0.8rem' }}>mode</th>
+                  <th style={{ padding: '0.8rem' }}>date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {testHistory.map((test) => (
+                  <tr key={test.id} style={{ borderBottom: '1px solid #2c2e31', fontSize: '1rem' }}>
+                    <td style={{ padding: '0.8rem', color: 'var(--main-color)', fontWeight: 'bold' }}>{test.wpm}</td>
+                    <td style={{ padding: '0.8rem' }}>{test.accuracy}%</td>
+                    <td style={{ padding: '0.8rem', color: 'var(--sub-color)' }}>{test.rawWpm}</td>
+                    <td style={{ padding: '0.8rem', color: 'var(--sub-color)', fontSize: '0.8rem' }}>{test.mode}</td>
+                    <td style={{ padding: '0.8rem', color: 'var(--sub-color)', fontSize: '0.8rem' }}>
+                      {new Date(test.date).toLocaleDateString()} {new Date(test.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-        ))}
+        )}
       </div>
     </div>
   );

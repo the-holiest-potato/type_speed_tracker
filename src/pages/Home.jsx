@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { generateWords } from "../wordGenerator";
+import { useAuth } from "../context/AuthContext";
 
 function Home() {
   const [currentText, setCurrentText] = useState(() => generateWords(50).join(" "));
@@ -11,9 +12,19 @@ function Home() {
   const [testFinished, setTestFinished] = useState(false);
   const [rawWpm, setRawWpm] = useState(0);
   
+  const { addTestResult } = useAuth();
   const inputRef = useRef(null);
 
-  // Removed redundant initialization effect
+  useEffect(() => {
+    if (testFinished) {
+      addTestResult({
+        wpm,
+        accuracy,
+        rawWpm,
+        mode: "time 30"
+      });
+    }
+  }, [testFinished]);
 
   useEffect(() => {
     let timer;
