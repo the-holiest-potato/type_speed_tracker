@@ -1,7 +1,23 @@
 import React from 'react';
 import { User, Settings, History, Award } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
+import { Navigate } from 'react-router-dom';
 
 const Profile = () => {
+  const { user } = useAuth();
+
+  if (!user) {
+    return (
+      <div className="container" style={{ marginTop: '100px', textAlign: 'center' }}>
+        <h1 className="title">Not Logged In</h1>
+        <p style={{ color: 'var(--sub-color)' }}>Please login to view your profile.</p>
+        <div style={{ marginTop: '2rem' }}>
+          <a href="/login" className="nav-item" style={{ display: 'inline-block', color: 'var(--main-color)' }}>Go to Login</a>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="container" style={{ marginTop: '100px' }}>
       <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
@@ -18,8 +34,8 @@ const Profile = () => {
         }}>
           <User size={50} color="var(--main-color)" />
         </div>
-        <h1 className="title" style={{ color: 'var(--main-color)', margin: '0' }}>Guest User</h1>
-        <p style={{ color: 'var(--sub-color)' }}>Sign in to track your progress</p>
+        <h1 className="title" style={{ color: 'var(--main-color)', margin: '0' }}>{user.username || 'User'}</h1>
+        <p style={{ color: 'var(--sub-color)' }}>{user.email}</p>
       </div>
 
       <div style={{ 
