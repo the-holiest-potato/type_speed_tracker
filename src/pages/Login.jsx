@@ -5,6 +5,7 @@ import './Login.css';
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -19,10 +20,14 @@ const Login = () => {
     }
   }, [user, navigate]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
+    if (!isLogin && !username) {
+      setError('Username is required');
+      return;
+    }
     if (!email || !password) {
       setError('Please fill in all fields');
       return;
@@ -33,16 +38,18 @@ const Login = () => {
       return;
     }
 
-    // Simulate authentication
-    const userData = { email, username: email.split('@')[0] };
-    
+    let result;
     if (isLogin) {
-      login(userData);
+      result = await login(email, password);
     } else {
-      register(userData);
+      result = await register(username, email, password);
     }
 
-    navigate('/profile');
+    if (result.success) {
+      navigate('/profile');
+    } else {
+      setError(result.message || 'Authentication failed');
+    }
   };
 
   return (
@@ -51,11 +58,22 @@ const Login = () => {
         <h1 className="title">{isLogin ? 'Login' : 'Sign-up'}</h1>
         {error && <p className="error-message">{error}</p>}
         <form className="login-form" onSubmit={handleSubmit}>
+          {!isLogin && (
+            <div className="form-group">
+              <label>Username</label>
+              <input 
+                type="text" 
+                placeholder="johndoe" 
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </div>
+          )}
           <div className="form-group">
-            <label>Email</label>
+            <label>{isLogin ? 'Email or Username' : 'Email'}</label>
             <input 
-              type="email" 
-              placeholder="example@email.com" 
+              type={isLogin ? "text" : "email"} 
+              placeholder={isLogin ? "example@email.com or username" : "example@email.com"} 
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />

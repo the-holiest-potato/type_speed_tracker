@@ -69,3 +69,70 @@ Adding a backend and a database is the perfect next step for TypeShift, especial
    1     npm run dev
 
   You can now visit http://localhost:5000/health to see the backend in action. Would you like to proceed to Phase 2: Auth & Profiles?
+
+  Step-by-Step AWS Deployment Guide for TypeShift
+
+  Here is the complete roadmap to deploy your full-stack project to AWS.
+
+  ---
+
+  1. Database (Amazon RDS)
+  First, set up a production-grade PostgreSQL database.
+   1. Create Database: Go to RDS Console -> Create database.
+   2. Engine: Select PostgreSQL.
+   3. Template: Select Free Tier (to stay within budget).
+   4. Settings: Set a DB instance identifier (e.g., typeshift-db), master username, and a strong password.
+   5. Connectivity: Ensure "Public access" is No (for security). You will allow access later via Security Groups.
+   6. Security Group: Create a new security group that allows inbound traffic on port 5432 from your Backend's IP range (or App Runner's security group).
+
+  ---
+
+  2. Backend (Amazon ECR & AWS App Runner)
+  We will host your Node.js container on App Runner—the simplest way to run containers on AWS.
+   1. ECR Repository: Go to Amazon ECR -> Create repository named typeshift-backend.
+   2. Push Image: From your terminal, authenticate and push your Docker image:
+
+   1     # Authenticate (get command from ECR 'View push commands')
+   2     aws ecr get-login-password --region <your-region> | docker login ...
+   3     
+   4     # Build and Tag
+   5     docker build -t typeshift-backend ./server
+   6     docker tag typeshift-backend:latest <your-account-id>.dkr.ecr.<region>.amazonaws.com/typeshift-backend:latest
+   7     
+   8     # Push
+   9     docker push <your-account-id>.dkr.ecr.<region>.amazonaws.com/typeshift-backend:latest
+   3. Create App Runner Service:
+       * Source: Container image from ECR.
+       * Deployment: Automatic (redeploy when a new image is pushed).
+       * Environment Variables: Add DATABASE_URL (the RDS endpoint), JWT_SECRET, and PORT=5000.
+       * Networking: Ensure it has access to the RDS security group.
+
+  ---
+
+  3. Frontend (Amazon S3 & CloudFront)
+  Host your React app as a static site.
+   1. Build App: In your root directory, run npm run build. This generates a dist/ folder.
+   2. S3 Bucket: Create an S3 bucket (e.g., typeshift-frontend).
+   3. Upload: Upload everything inside the dist/ folder to the bucket.
+   4. CloudFront Distribution:
+       * Origin: Select your S3 bucket.
+       * Default Root Object: index.html.
+       * Viewer Protocol Policy: Redirect HTTP to HTTPS.
+       * Error pages: Create a custom error response for 403 and 404 that points to /index.html (required for React Router).
+
+  ---
+
+  4. Final Integration
+   1. Update API URL: In your frontend code (AuthContext.jsx), change API_URL to point to your new App Runner URL.
+   2. Redeploy Frontend:
+
+   1     npm run build
+   2     aws s3 sync dist/ s3://typeshift-frontend --delete
+   3     aws cloudfront create-invalidation --distribution-id <your-id> --paths "/*"
+
+  Your Project is Live!
+   * Database: Persistent and managed by RDS.
+   * API: Scalable container on App Runner.
+   * Web: Fast, global delivery via CloudFront.
+
+  Would you like me to help you generate any specific configuration files (like a production.env) or assist with any of these steps in more detail?
