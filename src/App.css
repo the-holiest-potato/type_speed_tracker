@@ -33,8 +33,37 @@ body {
 
 .header {
   display: flex;
-  justify-content: flex-end; /* Align stats to the right since logo is in Navbar */
+  justify-content: space-between;
   align-items: center;
+}
+
+.mode-selection {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.mode-btn {
+  background: none;
+  border: none;
+  color: var(--sub-color);
+  font-family: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.mode-btn:hover {
+  color: var(--text-color);
+}
+
+.mode-btn.active {
+  color: var(--main-color);
+}
+
+.mode-btn:disabled {
+  cursor: default;
+  opacity: 0.5;
 }
 
 .logo {
@@ -52,6 +81,11 @@ body {
   color: var(--sub-color);
 }
 
+.main-stat {
+  color: var(--main-color);
+  font-weight: bold;
+}
+
 .typing-area {
   position: relative;
   min-height: 150px;
@@ -64,6 +98,12 @@ body {
   pointer-events: none;
 }
 
+.words-window {
+  height: calc(2.5rem * 4);
+  overflow: hidden;
+  position: relative;
+}
+
 .words-wrapper {
   display: flex;
   flex-wrap: wrap;
@@ -71,6 +111,7 @@ body {
   line-height: 2.5rem;
   color: var(--sub-color);
   user-select: none;
+  transition: transform 0.25s ease-out;
 }
 
 .word {

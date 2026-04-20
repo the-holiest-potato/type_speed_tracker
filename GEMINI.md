@@ -9,16 +9,16 @@
 - **Styling:** Modern Dark Mode with Purple accents (`--main-color: #ae81ff`).
 - **Core Logic:** Real-time WPM and accuracy calculation with a dynamic caret that moves through the text.
 - **Project Status:** 
-    - **Completed:** Core typing engine, real-time stats (WPM, Accuracy, Raw WPM), modern dark-mode UI, word-based line wrapping, results screen, dynamic word generation, and multi-page routing.
+    - **Completed:** Core typing engine, real-time stats (WPM, Accuracy, Raw WPM), modern dark-mode UI, word-based line wrapping, results screen, dynamic word generation, multi-page routing, test duration selection (30/60/120s), infinite typing support, and a fixed 4-line typing window with immediate line-scrolling.
     - **Ongoing:** Refining typing experience, user authentication, and profile management.
     - **Planned:** Database integration, Performance Dashboard, and Leaderboard.
 
-## Recent Changes (April 19, 2026)
-- **Multi-Page Routing:** Integrated `react-router-dom` and created `App.jsx` with routes for `/`, `/login`, and `/profile`.
-- **Navigation Bar:** Added a functional `Navbar` component with Lucide icons for seamless navigation between pages.
-- **Login & Profile Pages:** Implemented initial layouts for Login (with toggle between sign-in/sign-up) and Profile (guest view with feature previews).
-- **Bug Fixes:** Resolved a critical syntax error in `Login.jsx` caused by leaked CSS fragments and properly modularized page styles into separate CSS files.
-
+    ## Recent Changes (April 20, 2026)
+    - **Test Duration Options:** Added minimalist selection for 30s, 60s, and 120s tests in the header.
+    - **Infinite Typing:** Implemented dynamic word generation that appends new words as the user nears the end of the text.
+    - **Windowed Typing Area:** Restricted the visible typing area to 4 lines with an "Immediate Scroll" behavior (the previous line hides as soon as the cursor moves to the next).
+    - **Global Shortcuts:** Integrated a `Tab + Enter` shortcut to quickly restart the test while preventing default browser focus behavior.
+    - **Bug Fixes:** Resolved issues with duration selection sync, keyboard focus leaks, and a crash on the result screen's restart button.
 ## Building and Running
 The project uses **Vite** as the build tool and development server.
 
