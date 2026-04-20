@@ -5,20 +5,17 @@
 
 - **Frontend:** React 19, Vite, JavaScript (ESM).
 - **Backend:** Node.js (Express), Drizzle ORM, PostgreSQL.
-- **Database:** PostgreSQL 15 (Running via Docker).
-- **Routing:** React Router DOM for multi-page navigation (Home, Login, Profile).
-- **Icons:** Lucide React for consistent and modern iconography.
+- **Database:** PostgreSQL 15 (Running via Docker for Dev, RDS for Prod).
+- **Routing:** React Router DOM for multi-page navigation.
 - **Styling:** Modern Dark Mode with Purple accents (`--main-color: #ae81ff`).
-- **Core Logic:** Real-time WPM and accuracy calculation with a dynamic caret that moves through the text.
 
 ## Project Status
 - **Completed:** 
-    - Core typing engine, real-time stats (WPM, Accuracy, Raw WPM), modern dark-mode UI.
-    - Multi-page routing, test duration selection (30/60/120s), infinite typing support.
-    - Fixed 4-line typing window with immediate line-scrolling.
-    - **Backend Phase 1:** Node.js/Express scaffold, Drizzle ORM integration, and Dockerized PostgreSQL setup.
-- **Ongoing:** Phase 2: User Authentication (JWT) and Profile management.
-- **Planned:** Performance Dashboard, Global Leaderboard, and AWS Deployment.
+    - Core typing engine, real-time stats, and minimalist dark-mode UI.
+    - Infinite typing support and 4-line windowed scrolling.
+    - **Backend Phase 1-3:** JWT Authentication, PostgreSQL integration, and persistent test history.
+    - **Backend Phase 4:** Production Dockerization and AWS Deployment readiness.
+- **Next Steps:** Global Leaderboard, Performance Dashboard, and Production Launch.
 
 ## Building and Running
 
@@ -27,37 +24,18 @@
 - **Build for Production:** `npm run build`
 
 ### Backend (server/)
-The backend requires Docker for the database and Node.js for the API.
-1. **Start Database:**
-   ```bash
-   cd server
-   docker compose up -d
-   ```
-2. **Sync Database Schema:** (Run after schema changes)
-   ```bash
-   npm run db:push
-   ```
-3. **Start API Server:**
-   ```bash
-   npm run dev
-   ```
+1. **Start Database:** `cd server && docker-compose up -d`
+2. **Sync Schema:** `npm run db:push`
+3. **Start API Server:** `npm run dev`
 
-## Development Conventions
-
-### Backend & Database
-- **ORM:** Drizzle ORM for type-safe SQL queries.
-- **Architecture:** Express.js with a modular structure.
-- **Data Persistence:** Managed via Docker volumes (`postgres_data`).
-- **Schema:** Defined in `server/src/db/schema.js`.
-
-### UI & Styling
-- **Theme:** Dark mode by default (`#111111`) with purple highlights.
-- **CSS Variables:** Standardized in `src/App.css`.
+## AWS Deployment Architecture
+- **Frontend:** Hosted on **Amazon S3** as a static website and served via **Amazon CloudFront** for global CDN and HTTPS.
+- **Backend:** Containerized via **Docker** and deployed on **AWS App Runner** for automatic scaling and simplified management.
+- **Database:** **Amazon RDS (PostgreSQL)** for a managed, highly available production database.
+- **Security:** Secrets managed via environment variables in App Runner; HTTPS enforced by CloudFront.
 
 ## Key Files
-- `src/pages/Home.jsx`: Core typing experience.
-- `server/src/index.js`: Backend entry point.
-- `server/src/db/schema.js`: Database table definitions.
-- `server/docker-compose.yml`: Database infrastructure.
-- `package.json`: Frontend dependencies.
-- `server/package.json`: Backend dependencies.
+- `server/Dockerfile`: Production container definition.
+- `server/src/db/schema.js`: Database schema.
+- `src/context/AuthContext.jsx`: Full-stack integration.
+
