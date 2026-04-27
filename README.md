@@ -1,6 +1,6 @@
 # TypeShift
 
-**TypeShift** is a modern, minimalist web-based platform designed to help users practice, track, and improve their typing speed and accuracy. Inspired by high-performance typing tools, it provides a distraction-free environment with real-time analytics and global rankings.
+**[TypeShift](https://d7tq3ju7n5fb9.cloudfront.net/)** is a modern, minimalist web-based platform designed to help users practice, track, and improve their typing speed and accuracy. Inspired by high-performance typing tools, it provides a distraction-free environment with real-time analytics and global rankings.
 
 ## 🚀 Features
 
