@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Home, LogIn, User, LogOut } from 'lucide-react';
+import { Home, LogIn, User, LogOut, Trophy } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import './Navbar.css';
 
@@ -16,6 +16,9 @@ const Navbar = () => {
         <div className="nav-links">
           <Link to="/" className="nav-item" title="Home">
             <Home size={20} />
+          </Link>
+          <Link to="/leaderboard" className="nav-item" title="Leaderboard">
+            <Trophy size={20} />
           </Link>
           {user ? (
             <>
