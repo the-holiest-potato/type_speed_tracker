@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { User, History, TrendingUp, Award } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { 
@@ -15,6 +15,11 @@ import './Profile.css';
 
 const Profile = () => {
   const { user, testHistory } = useAuth();
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const stats = useMemo(() => {
     if (testHistory.length === 0) return { avgWpm: 0, bestWpm: 0, totalTests: 0 };
@@ -100,8 +105,8 @@ const Profile = () => {
           Performance
         </h2>
         <div className="chart-wrapper">
-          {testHistory.length > 0 ? (
-            <ResponsiveContainer width="99%" height="100%" debounce={1}>
+          {testHistory.length > 0 && isMounted ? (
+            <ResponsiveContainer width="100%" height="100%">
               <LineChart data={chartData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#2c2e31" vertical={false} />
                 <XAxis 
@@ -155,7 +160,7 @@ const Profile = () => {
             </ResponsiveContainer>
           ) : (
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: 'var(--sub-color)' }}>
-              No data available to display
+              {testHistory.length > 0 ? 'Initializing chart...' : 'No data available to display'}
             </div>
           )}
         </div>
