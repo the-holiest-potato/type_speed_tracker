@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import "./Leaderboard.css";
 
-const API_URL =
-  "http://ec2-40-192-38-237.ap-south-2.compute.amazonaws.com:5000/api";
+const API_URL = "/api";
 
 function Leaderboard() {
   const [mode, setMode] = useState("time 30");
