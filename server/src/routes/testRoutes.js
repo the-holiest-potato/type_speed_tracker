@@ -1,10 +1,13 @@
 import express from "express";
-import { saveTestResult, getTestHistory } from "../controllers/testController.js";
+import { saveTestResult, getTestHistory, getLeaderboard } from "../controllers/testController.js";
 import { authMiddleware } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-// All test routes require authentication
+// Public routes
+router.get("/leaderboard/:mode", getLeaderboard);
+
+// Protected routes require authentication
 router.use(authMiddleware);
 
 router.post("/", saveTestResult);

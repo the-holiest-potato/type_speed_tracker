@@ -1,0 +1,92 @@
+.leaderboard-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.leaderboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.leaderboard-title {
+  font-size: 2rem;
+  color: var(--main-color);
+  margin: 0;
+}
+
+.leaderboard-modes {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.leaderboard-table-container {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.leaderboard-table th,
+.leaderboard-table td {
+  padding: 1rem;
+}
+
+.leaderboard-table th {
+  background: rgba(255, 255, 255, 0.05);
+  color: #646669;
+  font-weight: normal;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+
+.leaderboard-table tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.leaderboard-table tr:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.rank {
+  width: 50px;
+  color: #646669;
+}
+
+.user-cell {
+  color: #d1d0c5;
+  font-weight: 500;
+}
+
+.wpm-cell {
+  color: var(--main-color);
+  font-weight: bold;
+}
+
+.acc-cell {
+  color: #d1d0c5;
+}
+
+.date-cell {
+  color: #646669;
+  font-size: 0.85rem;
+}
+
+.no-data {
+  text-align: center;
+  padding: 3rem;
+  color: #646669;
+}
+
+.loading-spinner {
+  text-align: center;
+  padding: 3rem;
+  color: var(--main-color);
+}
