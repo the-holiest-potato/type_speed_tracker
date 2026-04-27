@@ -5,9 +5,15 @@ import "dotenv/config";
 
 const { Pool } = pg;
 
+console.log(
+  "Database attempting to connect with SSL: rejectUnauthorized = false",
+);
+
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
 
 export const db = drizzle(pool, { schema });

@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import "./Leaderboard.css";
 
-const API_URL = "http://localhost:5000/api";
+const API_URL =
+  "http://ec2-40-192-38-237.ap-south-2.compute.amazonaws.com:5000/api";
 
 function Leaderboard() {
   const [mode, setMode] = useState("time 30");
@@ -80,7 +81,9 @@ function Leaderboard() {
             </tbody>
           </table>
         ) : (
-          <div className="no-data">No results found for this mode yet. Be the first!</div>
+          <div className="no-data">
+            No results found for this mode yet. Be the first!
+          </div>
         )}
       </div>
     </div>
