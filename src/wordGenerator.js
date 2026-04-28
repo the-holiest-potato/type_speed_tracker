@@ -5,96 +5,101 @@
 // ============================================================
 
 const WORD_LISTS = {
-  easy: [
-    "the","and","for","are","but","not","you","all","can","her",
-    "was","one","our","out","day","get","has","him","his","how",
-    "man","new","now","old","see","two","way","who","boy","did",
-    "its","let","put","say","she","too","use","dad","mom","run",
-    "sun","fun","big","cat","dog","sit","hat","map","red","bed",
-    "top","cup","hot","job","log","mud","net","pan","rat","sad",
-    "van","wet","yes","zip","arm","bag","car","ear","fig","gap",
-    "hop","ice","jar","key","lip","nap","oak","pig","rug","sky",
-    "toy","win","box","fly","cry","dry","try","spy","shy","joy",
-    "ace","act","add","age","aid","aim","air","ant","ape","arc",
-    "ash","ask","axe","bay","bit","bow","bug","bun","bus","buy",
-    "bye","cod","cot","cow","cut","dew","dig","dim","dot","dug",
-    "dye","egg","elm","end","eve","eye","fan","far","fat","fed",
-    "fee","few","fin","fit","fix","fog","fox","fur","gel","gem",
-    "gin","god","got","gum","gun","gut","guy","gym","ham","hay",
-    "hen","hit","hug","hum","hut","imp","ivy","jam","jet","jog",
-    "jot","jug","keg","kid","kin","kit","lad","lap","law","lay",
-    "led","leg","lid","lit","lot","low","mad","mat","mob","mop",
-    "nib","nil","nip","nod","nun","nut","oar","odd","oil","orb",
-    "owl","own","pad","pal","pay","pea","pen","pet","pin","pit",
-  ],
-
-  common: [
-    "the","be","to","of","and","in","that","have","it","for",
-    "not","on","with","he","as","you","do","at","this","but",
-    "his","by","from","they","we","say","her","she","or","an",
-    "will","my","one","all","would","there","their","what","so",
-    "up","out","if","about","who","get","which","go","me","when",
-    "make","can","like","time","no","just","him","know","take",
-    "people","into","year","your","good","some","could","them",
-    "see","other","than","then","now","look","only","come","over",
-    "think","also","back","after","use","how","our","work","first",
-    "well","way","even","new","want","because","any","these","give",
-    "day","most","us","great","between","need","large","often",
-    "hand","high","place","hold","turn","help","start","city",
-    "play","small","number","always","move","live","point","page",
-    "letter","answer","found","study","still","learn","plant","food",
-    "keep","feet","land","side","without","once","book","hear",
-    "stop","idea","fish","north","base","read","door","sure",
-    "dark","ball","heavy","pair","circle","language","story",
-    "science","road","rain","rule","pull","cold","voice","fall",
-    "power","drive","front","teach","week","green","quick","sleep",
-    "warm","free","minute","strong","mind","clear","fact","street",
-    "able","across","age","almost","along","already","area","baby",
-    "become","before","began","being","below","best","better","body",
-    "both","bring","built","called","came","cause","change","check",
-    "class","close","color","common","contain","control","cover",
-    "cross","cut","death","different","done","down","draw","each",
-    "early","earth","east","enough","ever","every","example","eyes",
-    "face","far","father","feel","few","field","fire","form",
-    "four","game","girl","given","glass","gone","group","grow",
-    "half","hard","head","heard","heart","heat","home","horse",
-    "hour","house","human","hundred","instead","kept","kind","known",
-    "last","later","less","level","light","line","list","little",
-    "long","love","made","many","matter","might","money","more",
-    "morning","mother","much","must","name","never","next","night",
-    "none","nothing","notice","open","order","outside","own","part",
-    "past","path","person","picture","piece","plan","poor","possible",
-    "problem","process","program","public","quite","real","really",
-    "reason","rest","result","right","river","rock","room","same",
-    "seem","self","sense","serve","set","ship","show","since",
-    "size","slow","something","sometimes","soon","south","space",
-    "speak","speed","stand","stars","state","stay","step","store",
-    "such","system","table","taken","talk","tell","thing","those",
-    "thought","three","through","together","told","took","town",
-    "tree","true","under","until","upon","used","usually","very",
-    "walk","watch","water","where","while","white","wide","wind",
-    "within","woman","women","word","world","write","young","zero",
-  ],
-
-  hard: [
-    "aberration","ambiguous","anachronism","antithesis","arbitrary",
-    "belligerent","benevolent","bureaucratic","cacophonous","circumspect",
-    "clandestine","cognizant","complacent","convoluted","cryptographic",
-    "debilitate","demagogue","despondent","dilapidated","discrepancy",
-    "egregious","eloquence","ephemeral","equivocate","exacerbate",
-    "fallacious","fastidious","formidable","frivolous","gratuitous",
-    "gregarious","hegemony","hypocritical","idiosyncratic","impetuous",
-    "incongruous","inquisitive","insidious","intransigent","juxtapose",
-    "labyrinthine","loquacious","magnanimous","malevolent","meticulous",
-    "nonchalant","obfuscate","obstreperous","omniscient","ostentatious",
-    "paradoxical","perfidious","perspicacious","philanthropic","pragmatic",
-    "precipitous","presumptuous","prevaricate","propitious","querulous",
-    "quintessential","recalcitrant","reciprocate","remonstrate","resilient",
-    "sagacious","sanguine","serendipitous","soliloquy","sophisticated",
-    "spurious","stoic","surreptitious","tenacious","trepidation",
-    "ubiquitous","unequivocal","vacillate","venerable","veracious",
-    "vicarious","vindictive","vivacious","volatile","voracious"
-  ],
+  english: {
+    easy: [
+      "the","and","for","are","but","not","you","all","can","her",
+      "was","one","our","out","day","get","has","him","his","how",
+      "man","new","now","old","see","two","way","who","boy","did",
+      "its","let","put","say","she","too","use","dad","mom","run",
+      "sun","fun","big","cat","dog","sit","hat","map","red","bed",
+      "top","cup","hot","job","log","mud","net","pan","rat","sad",
+      "van","wet","yes","zip","arm","bag","car","ear","fig","gap",
+      "hop","ice","jar","key","lip","nap","oak","pig","rug","sky",
+      "toy","win","box","fly","cry","dry","try","spy","shy","joy",
+      "ace","act","add","age","aid","aim","air","ant","ape","arc",
+      "ash","ask","axe","bay","bit","bow","bug","bun","bus","buy",
+      "bye","cod","cot","cow","cut","dew","dig","dim","dot","dug",
+      "dye","egg","elm","end","eve","eye","fan","far","fat","fed",
+      "fee","few","fin","fit","fix","fog","fox","fur","gel","gem",
+      "gin","god","got","gum","gun","gut","guy","gym","ham","hay",
+      "hen","hit","hug","hum","hut","imp","ivy","jam","jet","jog",
+      "jot","jug","keg","kid","kin","kit","lad","lap","law","lay",
+      "led","leg","lid","lit","lot","low","mad","mat","mob","mop",
+      "nib","nil","nip","nod","nun","nut","oar","odd","oil","orb",
+      "owl","own","pad","pal","pay","pea","pen","pet","pin","pit",
+    ],
+    common: [
+      "the","be","to","of","and","in","that","have","it","for",
+      "not","on","with","he","as","you","do","at","this","but",
+      "his","by","from","they","we","say","her","she","or","an",
+      "will","my","one","all","would","there","their","what","so",
+      "up","out","if","about","who","get","which","go","me","when",
+      "make","can","like","time","no","just","him","know","take",
+      "people","into","year","your","good","some","could","them",
+      "see","other","than","then","now","look","only","come","over",
+      "think","also","back","after","use","how","our","work","first",
+      "well","way","even","new","want","because","any","these","give",
+      "day","most","us","great","between","need","large","often",
+      "hand","high","place","hold","turn","help","start","city",
+      "play","small","number","always","move","live","point","page",
+      "letter","answer","found","study","still","learn","plant","food",
+      "keep","feet","land","side","without","once","book","hear",
+      "stop","idea","fish","north","base","read","door","sure",
+      "dark","ball","heavy","pair","circle","language","story",
+      "science","road","rain","rule","pull","cold","voice","fall",
+      "power","drive","front","teach","week","green","quick","sleep",
+      "warm","free","minute","strong","mind","clear","fact","street",
+      "able","across","age","almost","along","already","area","baby",
+      "become","before","began","being","below","best","better","body",
+      "both","bring","built","called","came","cause","change","check",
+      "class","close","color","common","contain","control","cover",
+      "cross","cut","death","different","done","down","draw","each",
+      "early","earth","east","enough","ever","every","example","eyes",
+      "face","far","father","feel","few","field","fire","form",
+      "four","game","girl","given","glass","gone","group","grow",
+      "half","hard","head","heard","heart","heat","home","horse",
+      "hour","house","human","hundred","instead","kept","kind","known",
+      "last","later","less","level","light","line","list","little",
+      "long","love","made","many","matter","might","money","more",
+      "morning","mother","much","must","name","never","next","night",
+      "none","nothing","notice","open","order","outside","own","part",
+      "past","path","person","picture","piece","plan","poor","possible",
+      "problem","process","program","public","quite","real","really",
+      "reason","rest","result","right","river","rock","room","same",
+      "seem","self","sense","serve","set","ship","show","since",
+      "size","slow","something","sometimes","soon","south","space",
+      "speak","speed","stand","stars","state","stay","step","store",
+      "such","system","table","taken","talk","tell","thing","those",
+      "thought","three","through","together","told","took","town",
+      "tree","true","under","until","upon","used","usually","very",
+      "walk","watch","water","where","while","white","wide","wind",
+      "within","woman","women","word","world","write","young","zero",
+    ],
+    hard: [
+      "aberration","ambiguous","anachronism","antithesis","arbitrary",
+      "belligerent","benevolent","bureaucratic","cacophonous","circumspect",
+      "clandestine","cognizant","complacent","convoluted","cryptographic",
+      "debilitate","demagogue","despondent","dilapidated","discrepancy",
+      "egregious","eloquence","ephemeral","equivocate","exacerbate",
+      "fallacious","fastidious","formidable","frivolous","gratuitous",
+      "gregarious","hegemony","hypocritical","idiosyncratic","impetuous",
+      "incongruous","inquisitive","insidious","intransigent","juxtapose",
+      "labyrinthine","loquacious","magnanimous","malevolent","meticulous",
+      "nonchalant","obfuscate","obstreperous","omniscient","ostentatious",
+      "paradoxical","perfidious","perspicacious","philanthropic","pragmatic",
+      "precipitous","presumptuous","prevaricate","propitious","querulous",
+      "quintessential","recalcitrant","reciprocate","remonstrate","resilient",
+      "sagacious","sanguine","serendipitous","soliloquy","sophisticated",
+      "spurious","stoic","surreptitious","tenacious","trepidation",
+      "ubiquitous","unequivocal","vacillate","venerable","veracious",
+      "vicarious","vindictive","vivacious","volatile","voracious"
+    ],
+  },
+  hindi: {
+    common: [
+      "है", "के", "में", "को", "और", "से", "का", "कि", "यह", "इस", "पर", "भी", "ही", "नहीं", "तो", "तक", "जो", "कर", "हो", "रहे", "किया", "था", "लिए", "अपने", "क्या", "सब", "साथ", "वे", "अब", "था", "थे", "थी", "बहुत", "वह", "उनकी", "उन्हें", "कुछ", "बाद", "दो", "फिर", "जब", "दिया", "मेरे", "गया", "द्वारा", "लेकिन", "अपनी", "या", "कहा", "काम", "हर", "बात", "करना", "इसे", "गए", "लोग", "समय", "हमारे", "देश", "होता", "बारे", "पहले", "आज", "सकता", "यहाँ", "वाले", "वाली", "हुआ", "कोई", "कई", "एक", "रूप", "उत्तर", "जीवन", "बच्चे", "अच्छी", "सबसे", "दिन", "घर", "साल", "भारत", "राज्य", "सरकार", "नई", "विकास", "शिक्षा", "समाज", "पानी", "महिला", "किसान", "आदि", "तरह", "काम", "होने", "जाता", "गई", "तक", "रहा", "करते", "कहते", "जैसे", "यदि", "क्योंकि", "बना", "सकते", "लिया", "दौरान", "लेकिन", "मदद", "अनुसार", "बड़ी", "किसी", "अंदर", "बीच", "दूसरे", "वहाँ", "पास", "लेकर", "बनाने", "वाले", "फिर", "तथा", "सभी", "यही", "चाहिए", "कारण", "नाम", "जाना", "काम", "आज", "दिखा", "जा", "रही", "कम", "ज्यादा", "पूरी", "काम", "क्षेत्र", "मुख्य", "बारे", "दें", "देंगे", "लिया", "जाना", "निकल", "होगा", "रहें"
+    ]
+  }
 };
 
 // Fisher-Yates shuffle
@@ -107,12 +112,18 @@ function shuffle(array) {
   return arr;
 }
 
-function getWordList(difficulty = "common") {
-  const list = WORD_LISTS[difficulty];
+function getWordList(difficulty = "common", language = "english") {
+  const langList = WORD_LISTS[language] || WORD_LISTS["english"];
+  let list = langList[difficulty];
+
+  if (!list) {
+    // Fallback to common if difficulty not found in language
+    list = langList["common"];
+  }
 
   if (!list) {
     throw new Error(
-      `TypeShift: "${difficulty}" is not a valid difficulty. Please use easy, common, or hard.`
+      `TypeShift: "${difficulty}" is not a valid difficulty for language "${language}".`
     );
   }
 
@@ -152,14 +163,14 @@ function _buildWordArray(pool, count) {
   return result;
 }
 
-function generateWords(count = 30, difficulty = "common") {
+function generateWords(count = 30, difficulty = "common", language = "english") {
   if (!Number.isInteger(count) || count < 1) {
     throw new Error(
       `TypeShift: count should be a positive number, but got: ${count}`
     );
   }
 
-  const pool = getWordList(difficulty);
+  const pool = getWordList(difficulty, language);
   return _buildWordArray(pool, count);
 }
 

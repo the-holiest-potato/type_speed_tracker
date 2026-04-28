@@ -3,8 +3,9 @@ import { generateWords } from "../wordGenerator";
 import { useAuth } from "../context/AuthContext";
 
 function Home() {
+  const [language, setLanguage] = useState("english");
   const [testDuration, setTestDuration] = useState(30);
-  const [currentText, setCurrentText] = useState(() => generateWords(100).join(" "));
+  const [currentText, setCurrentText] = useState(() => generateWords(100, "common", "english").join(" "));
   const [text, setText] = useState("");
   const [time, setTime] = useState(30);
   const [isTyping, setIsTyping] = useState(false);
@@ -28,7 +29,7 @@ function Home() {
         wpm,
         accuracy,
         rawWpm,
-        mode: `time ${testDuration}`
+        mode: `${language} ${testDuration}`
       });
     }
   }, [testFinished]);
@@ -72,7 +73,7 @@ function Home() {
     
     // Infinite words: if we are near the end of current text, add more words
     if (value.length > currentText.length - 200) {
-      const newWords = generateWords(50).join(" ");
+      const newWords = generateWords(50, "common", language).join(" ");
       setCurrentText(prev => prev + " " + newWords);
     }
 
@@ -106,7 +107,7 @@ function Home() {
     setAccuracy(calculatedAccuracy);
   };
 
-  const restartTest = (duration = testDuration) => {
+  const restartTest = (duration = testDuration, lang = language) => {
     setText("");
     setTime(duration);
     setIsTyping(false);
@@ -115,7 +116,7 @@ function Home() {
     setAccuracy(100);
     setTestFinished(false);
     setLineOffset(0);
-    setCurrentText(generateWords(100).join(" "));
+    setCurrentText(generateWords(100, "common", lang).join(" "));
     if (inputRef.current) {
       inputRef.current.focus();
     }
@@ -123,7 +124,12 @@ function Home() {
 
   const changeDuration = (duration) => {
     setTestDuration(duration);
-    restartTest(duration);
+    restartTest(duration, language);
+  };
+
+  const changeLanguage = (lang) => {
+    setLanguage(lang);
+    restartTest(testDuration, lang);
   };
 
   useEffect(() => {
@@ -153,7 +159,7 @@ function Home() {
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("keyup", handleKeyUp);
     };
-  }, [testDuration]); // Re-bind when duration changes to ensure restartTest uses correct state
+  }, [testDuration, language]); // Re-bind when duration or language changes
 
   const focusInput = () => {
     if (inputRef.current) {
@@ -198,19 +204,37 @@ function Home() {
     <div className="container" onClick={focusInput}>
       <header className="header">
         <div className="mode-selection">
-          {[30, 60, 120].map((d) => (
-            <button
-              key={d}
-              className={`mode-btn ${testDuration === d ? "active" : ""}`}
-              onClick={(e) => {
-                e.stopPropagation();
-                changeDuration(d);
-              }}
-              disabled={isTyping}
-            >
-              {d}
-            </button>
-          ))}
+          <div className="mode-group">
+            {["english", "hindi"].map((lang) => (
+              <button
+                key={lang}
+                className={`mode-btn ${language === lang ? "active" : ""}`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  changeLanguage(lang);
+                }}
+                disabled={isTyping}
+              >
+                {lang}
+              </button>
+            ))}
+          </div>
+          <div className="separator"></div>
+          <div className="mode-group">
+            {[30, 60, 120].map((d) => (
+              <button
+                key={d}
+                className={`mode-btn ${testDuration === d ? "active" : ""}`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  changeDuration(d);
+                }}
+                disabled={isTyping}
+              >
+                {d}
+              </button>
+            ))}
+          </div>
         </div>
         <div className="live-stats">
           <span className="main-stat">{time}s</span>

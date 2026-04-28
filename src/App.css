@@ -40,6 +40,19 @@ body {
 .mode-selection {
   display: flex;
   gap: 1.5rem;
+  align-items: center;
+}
+
+.mode-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.separator {
+  width: 2px;
+  height: 20px;
+  background-color: var(--sub-color);
+  opacity: 0.3;
 }
 
 .mode-btn {
